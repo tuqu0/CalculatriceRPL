@@ -14,12 +14,14 @@ public class FooPileRPL {
 			pile.sub();
 			pile.push(new ObjetEmpilable(5));
 			pile.mult();
-			pile.push(new ObjetEmpilable(2));
+			pile.push(new ObjetEmpilable(0));
 			pile.div();
+			
 			System.out.println(pile);
-		}
-		catch(Exception e) { 
+			
+		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+		
 	}
 }
