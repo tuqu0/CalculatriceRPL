@@ -82,7 +82,7 @@ public class PileRPL {
 		ObjetEmpilable tmp1;
 		ObjetEmpilable tmp2;
 
-		if (nbObjs != 2)
+		if (nbObjs < 2)
 			throw new CalcException("error: paramètre manquant pour l'addition");
 
 		tmp1 = pop();
@@ -98,7 +98,7 @@ public class PileRPL {
 		ObjetEmpilable tmp1;
 		ObjetEmpilable tmp2;
 
-		if (nbObjs != 2)
+		if (nbObjs < 2)
 			throw new CalcException("error: paramètre manquant pour la soustraction");
 
 		tmp1 = pop();
@@ -114,7 +114,7 @@ public class PileRPL {
 		ObjetEmpilable tmp1;
 		ObjetEmpilable tmp2;
 
-		if (nbObjs != 2)
+		if (nbObjs < 2)
 			throw new CalcException("error: paramètre manquant pour la multiplication");
 
 		tmp1 = pop();
@@ -130,7 +130,7 @@ public class PileRPL {
 		ObjetEmpilable tmp1;
 		ObjetEmpilable tmp2;
 
-		if (nbObjs != 2)
+		if (nbObjs < 2)
 			throw new CalcException("error: paramètre manquant pour la division");
 
 		tmp1 = pop();
