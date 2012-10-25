@@ -27,11 +27,15 @@ public class ObjetEmpilable {
 	
 	// Opération multiplication	
 	public void mult(ObjetEmpilable e) {
-		val = val * e.getVal();
+		val *= e.getVal();
 	}
 	
 	// Opération division
-	public void div(ObjetEmpilable e) {
-		val = val / e.getVal();
+	public void div(ObjetEmpilable e) throws CalcException {
+		
+		if (e.getVal() == 0)
+			throw new CalcException("error: impossible de diviser " + val + " par 0");
+		
+		val /=  e.getVal();
 	}	
 }

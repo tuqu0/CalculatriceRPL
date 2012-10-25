@@ -14,7 +14,7 @@ public class FooPileRPL {
 			pile.sub();
 			pile.push(new ObjetEmpilable(5));
 			pile.mult();
-			pile.push(new ObjetEmpilable(-5));
+			pile.push(new ObjetEmpilable(2));
 			pile.div();
 			System.out.println(pile);
 		}
