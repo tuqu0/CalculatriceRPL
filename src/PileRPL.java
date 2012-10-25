@@ -101,12 +101,13 @@ public class PileRPL {
 		if (nbObjs < 2)
 			throw new CalcException("error: paramètre manquant pour la soustraction");
 
+		swap();
 		tmp1 = pop();
 		drop();
 		tmp2 = pop();
 		drop();
-		tmp2.sub(tmp1);
-		push(tmp2);		
+		tmp1.sub(tmp2);
+		push(tmp1);		
 	}
 
 	// Opération multiplication	
@@ -133,11 +134,12 @@ public class PileRPL {
 		if (nbObjs < 2)
 			throw new CalcException("error: paramètre manquant pour la division");
 
+		swap();
 		tmp1 = pop();
 		drop();
 		tmp2 = pop();
 		drop();
-		tmp2.div(tmp1);
-		push(tmp2);			
+		tmp1.div(tmp2);
+		push(tmp1);			
 	}
 }
