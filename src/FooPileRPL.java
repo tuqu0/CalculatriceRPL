@@ -4,7 +4,7 @@ import java.util.StringTokenizer;
 
 public class FooPileRPL {
 
-	static boolean tryParseInt(String st)  
+	static Boolean tryParseInt(String st)  
 	{  
 		try  {  
 			Integer.parseInt(st);  
