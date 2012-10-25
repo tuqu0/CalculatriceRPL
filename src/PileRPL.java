@@ -1,7 +1,7 @@
 
 public class PileRPL {
 	
-	private static final int NBOBJSMAX = 4;
+	private int NBOBJSMAX = 4;
 	private int nbObjs = 0;
 	private ObjetEmpilable[] pile;
 	
@@ -12,7 +12,8 @@ public class PileRPL {
 	
 	// Constructeur permettant de définir la taille de la pile
 	public PileRPL(int size) {
-		pile = new ObjetEmpilable[size];
+		NBOBJSMAX = size;
+		pile = new ObjetEmpilable[NBOBJSMAX];
 	}
 
 	// Surchage de la méthode toString()
