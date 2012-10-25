@@ -27,7 +27,7 @@ public class PileRPL {
 
 	// Ajoute un ObjetEmpilable sur la pile
 	public void push(ObjetEmpilable elt) throws CalcException {
-		if (nbObjs == NBOBJSMAX) {
+		if (isFull()) {
 			throw new CalcException("error: impossible d'ajouter un nouvel élément car la pile est pleine");
 		}
 		pile[nbObjs++] = elt;
@@ -35,7 +35,7 @@ public class PileRPL {
 
 	// Renvoie le dernier élément de la pile
 	public ObjetEmpilable pop() throws CalcException {
-		if (nbObjs == 0) {
+		if (isEmpty()) {
 			throw new CalcException("error: impossible de récupérer le dernier élélement car la pile est vide");
 		}
 		return pile[nbObjs - 1];
@@ -43,7 +43,7 @@ public class PileRPL {
 
 	// Enlève le dernier élément de la pile
 	public void drop() throws CalcException {
-		if (nbObjs == 0) {
+		if (isEmpty()) {
 			throw new CalcException("error: impossible de supprimer le dernier élement car la pile est vide");
 		}
 		pile[--nbObjs] = null;	
@@ -51,12 +51,12 @@ public class PileRPL {
 
 	// Contrôle si la pile est vie
 	public Boolean isEmpty() {
-		return (pile.length == 0);
+		return (nbObjs == 0);
 	}
 
 	// Contrôle si la pile est pleine
 	public Boolean isFull() {
-		return (pile.length == NBOBJSMAX);
+		return (nbObjs == NBOBJSMAX);
 	}
 
 	// Permute les deux derniers éléments de la pile
@@ -64,7 +64,7 @@ public class PileRPL {
 		ObjetEmpilable tmp1;
 		ObjetEmpilable tmp2;
 
-		if (nbObjs == 0) {
+		if (isEmpty()) {
 			throw new CalcException("error: impossible de swaper les deux derniers éléments car la pile est vide");
 		}
 		else if (nbObjs > 1) {
