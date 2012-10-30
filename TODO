@@ -1,6 +1,8 @@
-0) intéragir avec la pile
-1) log de la session
-2) rejouer la session sauvegardée
-3) passer le contrôle au réseau
-4) rendre le contrôle à la console
-5) quitter
+TODO LIST
++ mode console
++ mode intéraction avec la pile
++ enregistrement d'une session
++ rejouer une session
++ mode réseau
++ connections multiples en mode réseau
++ authentification du client en mode réseau

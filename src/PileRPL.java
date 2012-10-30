@@ -1,4 +1,3 @@
-
 public class PileRPL {
 
 	private int NBOBJSMAX = 30;
@@ -16,90 +15,112 @@ public class PileRPL {
 		pile = new ObjetEmpilable[NBOBJSMAX];
 	}
 
-	// Surchage de la méthode toString()
+	// Surchage de la méthode toString
 	public String toString() {
 		String s = new String();
-
+		
+		s = "\n-- PILE --\n";
 		for (int i=0; i < nbObjs; i++)
-			s += "index" + i + " : | " + (pile[i]).toString() + " | \n";
+			s += "index" + i + " |" + (pile[i]).toString() + "|\n";
 		return s;
 	}
 
-	// Ajoute un ObjetEmpilable sur la pile
-	public void push(ObjetEmpilable elt) throws CalcException {
-		if (isFull()) {
-			throw new CalcException("error: impossible d'ajouter un nouvel élément car la pile est pleine");
-		}
+	/*
+	 *  Ajoute un ObjetEmpilable sur la pile.
+	 *  Si la pile est pleine, on tente de réallouer
+	 *  une pile par bloc de 30 éléments
+	 */
+	public boolean push(ObjetEmpilable elt) {
+		if (isFull() && !realloc(30))
+ 			return false;
 		pile[nbObjs++] = elt;
+		return true;
 	}
 
 	// Renvoie le dernier élément de la pile
-	public ObjetEmpilable pop() throws CalcException {
-		if (isEmpty()) {
-			throw new CalcException("error: impossible de récupérer le dernier élélement car la pile est vide");
-		}
+	public ObjetEmpilable pop() {
+		if (isEmpty())
+			return null;
 		return pile[nbObjs - 1];
 	}
 
 	// Enlève le dernier élément de la pile
-	public void drop() throws CalcException {
-		if (isEmpty()) {
-			throw new CalcException("error: impossible de supprimer le dernier élement car la pile est vide");
+	public boolean drop() {
+		if (isEmpty())
+			return false;
+		pile[--nbObjs] = null;
+		return true;
+	}
+
+	// Réalloue une nouvelle pile
+	public boolean realloc(int nbmore) {
+		try {
+			ObjetEmpilable[] tmp = new ObjetEmpilable[pile.length + nbmore];
+		
+			for (int i = 0; i < pile.length; i++)
+				tmp[i] = pile[i];
+		
+			NBOBJSMAX += nbmore;
+			pile = tmp;
+			
+			return true;
 		}
-		pile[--nbObjs] = null;	
+		catch (Exception e) {
+			return false;
+		}
 	}
 
 	// Contrôle si la pile est vie
-	public Boolean isEmpty() {
+	public boolean isEmpty() {
 		return (nbObjs == 0);
 	}
 
 	// Contrôle si la pile est pleine
-	public Boolean isFull() {
+	public boolean isFull() {
 		return (nbObjs == NBOBJSMAX);
 	}
 
 	// Permute les deux derniers éléments de la pile
-	public void swap() throws CalcException {
+	public boolean swap() {
 		ObjetEmpilable tmp1;
 		ObjetEmpilable tmp2;
 
-		if (isEmpty()) {
-			throw new CalcException("error: impossible de swaper les deux derniers éléments car la pile est vide");
-		}
-		else if (nbObjs > 1) {
+		if (nbObjs > 1) {
 			tmp1 = pop();
 			drop();
 			tmp2 = pop();
 			drop();
 			push(tmp1);
 			push(tmp2);
+			return true;
 		}
+		return false;
 	}
 
 	// Opération addition
-	public void add() throws CalcException {
+	public boolean add() {
 		ObjetEmpilable tmp1;
 		ObjetEmpilable tmp2;
 
 		if (nbObjs < 2)
-			throw new CalcException("error: paramètre manquant pour l'addition");
-
+			return false;
+		
 		tmp1 = pop();
 		drop();
 		tmp2 = pop();
 		drop();
 		tmp1.add(tmp2);
 		push(tmp1);
+		return true;
 	}
 
 	// Opération soustraction
-	public void sub() throws CalcException  {
+	public boolean sub() {
 		ObjetEmpilable tmp1;
 		ObjetEmpilable tmp2;
 
 		if (nbObjs < 2)
-			throw new CalcException("error: paramètre manquant pour la soustraction");
+			return false;
 
 		swap();
 		tmp1 = pop();
@@ -107,39 +128,49 @@ public class PileRPL {
 		tmp2 = pop();
 		drop();
 		tmp1.sub(tmp2);
-		push(tmp1);		
+		push(tmp1);	
+		return true;
 	}
 
 	// Opération multiplication	
-	public void mult() throws CalcException {
+	public boolean mult() {
 		ObjetEmpilable tmp1;
 		ObjetEmpilable tmp2;
 
 		if (nbObjs < 2)
-			throw new CalcException("error: paramètre manquant pour la multiplication");
+			return false;
 
 		tmp1 = pop();
 		drop();
 		tmp2 = pop();
 		drop();
 		tmp1.mult(tmp2);
-		push(tmp1);			
+		push(tmp1);
+		return true;
 	}
 
 	// Opération division
-	public void div() throws CalcException {
+	public boolean div() {
 		ObjetEmpilable tmp1;
 		ObjetEmpilable tmp2;
 
 		if (nbObjs < 2)
-			throw new CalcException("error: paramètre manquant pour la division");
-
+			return false;
+		
 		swap();
 		tmp1 = pop();
 		drop();
 		tmp2 = pop();
 		drop();
+		
+		if (tmp2.getVal() == 0) {
+			push(tmp1);
+			push(tmp2);
+			return false;
+		}
+		
 		tmp1.div(tmp2);
-		push(tmp1);			
+		push(tmp1);
+		return true;
 	}
 }

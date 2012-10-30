@@ -3,18 +3,26 @@ public class ObjetEmpilable {
 
 	private int val;
 
-	public String toString() {
-		return Integer.toString(val);
-	}
-
+	// Constructeur
 	public ObjetEmpilable(int i) {
 		val = i;
 	}
 
+	// Surcharge de la méthode toString
+	public String toString() {
+		return Integer.toString(val);
+	}
+
+	// Getter for val
 	public int getVal() {
 		return val;
 	}
 
+	// Setter for val
+	public void setVal(int i) {
+		this.val = i;
+	}
+	
 	// Opération addition
 	public void add(ObjetEmpilable e) {
 		val += e.getVal();
@@ -31,11 +39,7 @@ public class ObjetEmpilable {
 	}
 
 	// Opération division
-	public void div(ObjetEmpilable e) throws CalcException {
-
-		if (e.getVal() == 0)
-			throw new CalcException("error: impossible de diviser " + val + " par 0");
-
+	public void div(ObjetEmpilable e) {
 		val /=  e.getVal();
 	}	
 }
