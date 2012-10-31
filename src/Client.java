@@ -19,74 +19,56 @@ public class Client extends Thread {
 
 	// Surcharge de la méthode run
 	public void run() {
-		try {			
-			int val;
-			String line, token;
-			StringTokenizer st;
+		int val;
+		String line, token;
+		StringTokenizer st;
+
+		try {						
 			PrintStream out = new PrintStream(socket.getOutputStream());
 			Scanner in = new Scanner(new BufferedReader(new InputStreamReader(socket.getInputStream())));
 			PileRPL pile = new PileRPL();
 
-			try {
-				OptionsManager opt = new OptionsManager(pile, in, out);
+			OptionsManager opt = new OptionsManager(pile, in, out);
 
-				while (!opt.authentification());
+			while (!opt.authentification());
 
-				opt.usageRemote();
-				while (!(line = in.nextLine()).equals("exit")){
-					st = new StringTokenizer(line);
+			opt.usageRemote();
+			while (!(line = in.nextLine()).equals("exit")){
+				st = new StringTokenizer(line);
 
-					while (st.hasMoreTokens()) {
-						token = st.nextToken();	
-						System.out.println("client" + id + ": option " + token);
+				while (st.hasMoreTokens()) {
+					token = st.nextToken();	
+					System.out.println("client" + id + ": option " + token);
 
-						if (pile == null) {
-							pile = new PileRPL();
-							opt.setPileRPL(pile);
-						}			
+					if (OptionsManager.tryParseInt(token)) {
+						val = Integer.parseInt(token);
 
-						if (OptionsManager.tryParseInt(token)) {
-							val = Integer.parseInt(token);
-
-							switch (val) {
-							case 0:
-								out.println("* Intéraction avec la pile *");						
-								opt.modStack();
-								break;
-							case 1:
-								out.println("* Mode Console *");
-								opt.modConsole();
-								break;
-							}
-							out.println("\n*** MENU PRINCIPAL ***");													
-						}
-						else if (token.equals("help")) {
-							opt.usageRemote();
+						switch (val) {
+						case 0:
+							out.println("* Intéraction avec la pile *");						
+							opt.modStack();
+							break;
+						case 1:
+							out.println("* Mode Console *");
+							opt.modConsole();
 							break;
 						}
-						else
-							out.println("erreur : option incorrecte");
+						out.println("\n*** MENU PRINCIPAL ***");													
 					}
+					else if (token.equals("help")) {
+						opt.usageRemote();
+						break;
+					}
+					else
+						out.println("erreur : option incorrecte");
 				}
-			}	
-			catch (Exception e) {
-				out.println(e.getMessage()); 
 			}
-			finally { 
-				in.close();
-				out.close();
-			}
-		}
-		catch (Exception e) { 
-			System.out.println(e.getMessage()); 
-		}
-		finally { 
-			try { 
-				socket.close(); 
-			}
-			catch (Exception e){ 
-				System.out.println(e.getMessage()); 
-			}
+			in.close();
+			out.close();
+			socket.close();
+		}	
+		catch (Exception e) {
+			System.out.println("client " + id + " : " +e.getMessage()); 
 		}
 	}
 }

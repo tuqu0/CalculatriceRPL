@@ -1,0 +1,97 @@
+----------- CalcRPL -----------
+
+
+[SOMMAIRE]
+1. Hiérarichie
+2. Compilation
+3. Exécution
+4. Options
+5. Commandes
+6. Spécificités
+
+
+1. [Hiérarchie]
+src ->	fichiers sources .java
+bin ->	fichiers compilés .class + fichier d'authentification
+	des utilisateurs pour le mode réseau
+
+
+2. [Compilation]
+Dans un terminal à la racine du projet exécuter dans un shell
+la commande : 
+$ make
+
+
+3. [Exécution]
+La classe contenant la fonction main se nomme FooPileRPL.
+Pour exécuter le programme, taper dans un terminal depuis 
+la racine du projet la commande :
+$ cd bin/ && java FooPileRPL
+
+
+4. [Options]
+Le projet comporte plusieurs options :
+	
+	- mode console
+	   ce mode permet de saisir des opérations arithmétiques en notation
+	   polonaise inversée. Chaque modification de la pile est affichiée 
+	   à l'écran
+
+	- mode intéraction avec la pile : 
+           identique au mode console à l'exception que des commandes ont été
+	   rajoutées permettant à l'utilisateur de manipuler la pile.
+	   "push"  -> permet d'empiler un nouvel élément sur la pile
+	   "pop"   -> affiche le dernier élément de la pile
+	   "drop"  -> supprime le dernier élément de la pile
+	   "swap"  -> permute les deux derniers éléments de la pile
+	   "print" -> affiche la pile
+
+	- log de session :
+	   permet d'enregistrer les opérations saisies en mode console et/ou 
+	   mode intéraction avec la pile dans un fichier. Le fichier est créé 
+	   dans le répertoire courant du programme. Si le fichier existe déjà, 
+	   on écrit à la suite.
+
+	- rejeu de session :
+	   permet de rejouer une session mode console et/ou mode intéraction 
+	   avec la pile, en spécifiant le nom d'un fichier.
+
+	- mode réseau :
+	   permet d'exécuter l'application en mode serveur en spécifiant un 
+           port d'écoute. Au lancement de ce mode, le fichier "users.config" 
+           contenant les logins et les hash md5 des passwords autorisés à se 
+           connecter, est chargé. Ce fichier ce trouve dans le répertoire 
+           courant du programme. A chaque nouvelle connection cliente, on lance
+           un nouveau thread propre au client et on demande l'authentification 
+           du client pour intéragir avec le serveur.
+	   	   En tant que client, seul les options "intéragir avec la pile" et 
+           "mode console" sont disponibles. Chaque client possède sa propre 
+           pile pour effectuer ses opérations.
+
+		
+5. [Commandes]
+	- quitter un mode choisie pour revenir au menu princial : "exit"
+
+	- quitter le programme depuis le menu principal : "exit"
+
+	- afficher les options disponibles depuis le menu principal : "help"
+
+
+6. [Spécificités]
+	- Pour le mode réseau, deux tuples login / password ont été définis :
+		* toto / tata
+		* admin / admin
+		
+	- Lorsque l'on passe du "mode console" au "mode intéraction avec la 
+	  pile" ou vis-versa, on conserve la même pile.
+
+	- Lorsque l'on active le mode "log de session", on utilise une nouvelle
+	  pile.
+
+	- L'allocation de la pile est faite par blocs dynamiquement. Lors de la
+	  première utilisation de la pile, on dispose d'une pile pouvant 
+	  contenir 30 éléments. Par la suite, au moment de "push" un nouvel 
+	  élément, si la pile est pleine et réalloue 30 éléments 
+	  supplémentaires à la pile puis on "push" l'élément.
+	  
+

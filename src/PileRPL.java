@@ -61,8 +61,7 @@ public class PileRPL {
 				tmp[i] = pile[i];
 		
 			NBOBJSMAX += nbmore;
-			pile = tmp;
-			
+			pile = tmp;	
 			return true;
 		}
 		catch (Exception e) {

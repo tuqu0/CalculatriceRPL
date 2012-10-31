@@ -11,12 +11,13 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class OptionsManager {
+	private final  static String auth_file = "users.config";
+	private static Hashtable<String, String> users;
 	private boolean log_session = false;
 	private static String log_file = new String();
 	private PileRPL pile;
 	private PrintStream out;
 	private Scanner in;
-	private static Hashtable<String, String> users;
 
 	// Teste si une chaîne peut être parsée en entier
 	public static Boolean tryParseInt(String st)  {  
@@ -40,7 +41,9 @@ public class OptionsManager {
 				result += Integer.toHexString((0x000000ff & s[i]) | 0xffffff00).substring(6);
 			return result;  
 		}
-		catch (Exception e) { return result;}
+		catch (Exception e) { 
+			return result;
+		}
 	}
 
 	/*
@@ -337,7 +340,7 @@ public class OptionsManager {
 
 			while (true){
 				socketclt = socketsrv.accept();
-				out.println("Connexion d'un nouveau client");
+				out.println("Connexion d'un nouveau client depuis " + socketclt.getRemoteSocketAddress());
 				new Client(socketclt);
 			}
 		}
@@ -362,21 +365,38 @@ public class OptionsManager {
 	private boolean loadUsers() {
 		String line;
 		String[] tmp;
-		BufferedReader reader;
+		BufferedReader reader = null;
 		users = new Hashtable<String, String>();
 
 		try {
-			reader = new BufferedReader(new FileReader("users.config"));
+			reader = new BufferedReader(new FileReader(auth_file));
 			while ((line = reader.readLine()) != null){
 				tmp = line.split(":");
-				if (tmp.length >= 2)
+				if (tmp.length == 2)
 					users.put(tmp[0], tmp[1]);
+				else
+					out.println("le tuple login/password " + line + " est invalide");
 			}
+			
+			if (users.size() == 0) {
+				out.println("erreur: aucun login/password définis");
+				return false;
+			}
+			
 			return true;
 		}
 		catch (Exception e) {
 			out.println(e.getMessage());
 			return false;
+		}
+		finally {
+			try {
+				if (reader != null)
+					reader.close(); 
+			}
+			catch (Exception e) {
+				out.println(e.getMessage());
+			}
 		}
 	}
 
@@ -392,7 +412,8 @@ public class OptionsManager {
 		login = in.next();
 		out.print("password : ");
 		passwd = in.next();
-
+		out.println();
+		
 		if (users != null &&
 				users.containsKey(login) && 
 				users.get(login).equals(md5Encode(passwd)))

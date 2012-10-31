@@ -4,5 +4,5 @@ TODO LIST
 + enregistrement d'une session
 + rejouer une session
 + mode réseau
-+ connections multiples en mode réseau
++ connections multiples en mode réseau (threads)
 + authentification du client en mode réseau
