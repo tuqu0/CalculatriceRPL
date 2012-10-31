@@ -13,7 +13,7 @@ dist: clean
 	rm -rf ../$(DIST).tar.gz 2>/dev/null
 	mkdir ../$(DIST)
 	cp -r ../$(DIR)/*  ../$(DIST)
-	tar cvfj ../$(DIST).tar.gz ../$(DIST) 
+	zip ../$(DIST).zip ../$(DIST) 
 	rm -rf ../$(DIST)
-	md5sum ../$(DIST).tar.gz
+	md5sum ../$(DIST).zip
 

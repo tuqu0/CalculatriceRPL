@@ -11,7 +11,7 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class OptionsManager {
-	private final  static String auth_file = "users.config";
+	private final static String auth_file = "users.config";
 	private static Hashtable<String, String> users;
 	private boolean log_session = false;
 	private static String log_file = new String();
@@ -163,7 +163,7 @@ public class OptionsManager {
 	}
 
 	/*
-	 * Mode Intélraction avec la pile.
+	 * Mode Intéraction avec la pile.
 	 * Permet de saisir des opérations, d'afficher chaque
 	 * changement d'état de la pile et de saisir des commandes
 	 * pour manipuler la pile ("push", "pop", "drop", "swap", "print")
@@ -325,7 +325,9 @@ public class OptionsManager {
 	}
 
 	/*
-	 * Mode réseau :
+	 * Mode réseau : permet de passer en mode serveur en spécifiant le port d'écoute.
+	 * La liste des logins/passwords valides pour se connecter au serveur est chargée
+	 * à ce moment.
 	 */
 	public void modNetwork(Integer port) {
 		ServerSocket socketsrv = null;
@@ -377,12 +379,12 @@ public class OptionsManager {
 				else
 					out.println("le tuple login/password " + line + " est invalide");
 			}
-			
+
 			if (users.size() == 0) {
 				out.println("erreur: aucun login/password définis");
 				return false;
 			}
-			
+
 			return true;
 		}
 		catch (Exception e) {
@@ -413,7 +415,7 @@ public class OptionsManager {
 		out.print("password : ");
 		passwd = in.next();
 		out.println();
-		
+
 		if (users != null &&
 				users.containsKey(login) && 
 				users.get(login).equals(md5Encode(passwd)))

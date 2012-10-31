@@ -1,4 +1,3 @@
-
 public class ObjetEmpilable {
 
 	private int val;
@@ -22,7 +21,7 @@ public class ObjetEmpilable {
 	public void setVal(int i) {
 		this.val = i;
 	}
-	
+
 	// Opération addition
 	public void add(ObjetEmpilable e) {
 		val += e.getVal();

@@ -44,14 +44,14 @@ public class Client extends Thread {
 						val = Integer.parseInt(token);
 
 						switch (val) {
-						case 0:
-							out.println("* Intéraction avec la pile *");						
-							opt.modStack();
-							break;
-						case 1:
-							out.println("* Mode Console *");
-							opt.modConsole();
-							break;
+							case 0:
+								out.println("* Intéraction avec la pile *");						
+								opt.modStack();
+								break;
+							case 1:
+								out.println("* Mode Console *");
+								opt.modConsole();
+								break;
 						}
 						out.println("\n*** MENU PRINCIPAL ***");													
 					}

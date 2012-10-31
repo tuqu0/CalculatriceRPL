@@ -18,7 +18,7 @@ public class PileRPL {
 	// Surchage de la méthode toString
 	public String toString() {
 		String s = new String();
-		
+
 		s = "\n-- PILE --\n";
 		for (int i=0; i < nbObjs; i++)
 			s += "index" + i + " |" + (pile[i]).toString() + "|\n";
@@ -32,7 +32,7 @@ public class PileRPL {
 	 */
 	public boolean push(ObjetEmpilable elt) {
 		if (isFull() && !realloc(30))
- 			return false;
+			return false;
 		pile[nbObjs++] = elt;
 		return true;
 	}
@@ -56,10 +56,10 @@ public class PileRPL {
 	public boolean realloc(int nbmore) {
 		try {
 			ObjetEmpilable[] tmp = new ObjetEmpilable[pile.length + nbmore];
-		
+
 			for (int i = 0; i < pile.length; i++)
 				tmp[i] = pile[i];
-		
+
 			NBOBJSMAX += nbmore;
 			pile = tmp;	
 			return true;
@@ -103,7 +103,7 @@ public class PileRPL {
 
 		if (nbObjs < 2)
 			return false;
-		
+
 		tmp1 = pop();
 		drop();
 		tmp2 = pop();
@@ -155,19 +155,19 @@ public class PileRPL {
 
 		if (nbObjs < 2)
 			return false;
-		
+
 		swap();
 		tmp1 = pop();
 		drop();
 		tmp2 = pop();
 		drop();
-		
+
 		if (tmp2.getVal() == 0) {
 			push(tmp1);
 			push(tmp2);
 			return false;
 		}
-		
+
 		tmp1.div(tmp2);
 		push(tmp1);
 		return true;
